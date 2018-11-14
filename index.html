@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Elm format online</title>
+  </head>
+  <body>
+    <button id="format-button" type="button"> Format </button>
+    <br/>
+    <textarea id="content" name="content" rows="80" cols="80"></textarea>
+  </body>
+  <script type="text/javascript">
+    const textInput = document.querySelector('#content');
+    textInput.value = `module Dom.Components.Header       exposing (Navigation, view)
+type alias Navigation = { previous :
+ String, next : String }
+`
+    document
+      .querySelector('#format-button')
+      .addEventListener('click', format);
+
+    function format() {
+      var req = new XMLHttpRequest();
+      req.open('POST', 'http://localhost:3000', false)
+      req.setRequestHeader("Access-Control-Allow-Origin", "*");
+      req.send(JSON.stringify({code: textInput.value}))
+      var code = JSON.parse(req.responseText)
+      console.log(code);
+      // fetch('http://localhost:3000', {
+      //   method: "POST", mode: "no-cors", body: JSON.stringify({code: textInput.value})
+      // })
+        // .then(res => res.json())
+        // .then(async content => {
+        //   console.log({content})
+        //   console.log(await content.json())
+        //   textInput.value = content.code;
+        // })
+        // .catch(error => {
+        //   console.error(error);
+        // })
+    }
+  </script>
+</html>
