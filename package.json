@@ -1,0 +1,23 @@
+{
+  "name": "online-elm-format",
+  "version": "1.0.0",
+  "description": "Format Elm code using elm-format",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jfmengels/online-elm-format.git"
+  },
+  "keywords": [
+    "elm-format",
+    "elm"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jfmengels/online-elm-format/issues"
+  },
+  "homepage": "https://github.com/jfmengels/online-elm-format#readme"
+}
