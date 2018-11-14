@@ -4,6 +4,7 @@
   "description": "Format Elm code using elm-format",
   "main": "index.js",
   "scripts": {
+    "start": "micro",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,5 +20,10 @@
   "bugs": {
     "url": "https://github.com/jfmengels/online-elm-format/issues"
   },
-  "homepage": "https://github.com/jfmengels/online-elm-format#readme"
+  "homepage": "https://github.com/jfmengels/online-elm-format#readme",
+  "dependencies": {
+    "elm-format": "^0.8.1",
+    "micro": "^9.3.3",
+    "micro-query": "^0.3.0"
+  }
 }
