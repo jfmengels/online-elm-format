@@ -1,10 +1,12 @@
 const util = require("util");
 const childProcess = require("child_process");
-const { json } = require("micro");
+const express = require("express");
+const bodyParser = require("body-parser");
+
+// ELM FORMATTING
 
 const binary = "./node_modules/.bin/elm-format";
 const elmVersion = "0.19";
-
 const spawnAsync = util.promisify(childProcess.spawn);
 
 const elmFormat = async input => {
@@ -38,9 +40,20 @@ const elmFormat = async input => {
   }
 };
 
-module.exports = async req => {
-  const { code } = await json(req);
-  return {
-    code: await elmFormat(code)
-  };
-};
+// SERVER
+
+const app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.use(express.static("dist"));
+app.post("/", async (req, res, next) => {
+  return res.send({
+    code: await elmFormat(req.body.code)
+  });
+});
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Started on port ${port}`);
+});

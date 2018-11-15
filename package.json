@@ -4,7 +4,7 @@
   "description": "Format Elm code using elm-format",
   "main": "index.js",
   "scripts": {
-    "start": "micro",
+    "start": "node server.js",
     "npm run build": "elm make src/Main.elm",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -23,8 +23,11 @@
   },
   "homepage": "https://github.com/jfmengels/online-elm-format#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "elm-format": "^0.8.1",
-    "micro": "^9.3.3",
-    "micro-query": "^0.3.0"
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "elm": "^0.19.0-bugfix2"
   }
 }

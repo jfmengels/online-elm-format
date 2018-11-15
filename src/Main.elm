@@ -1,9 +1,12 @@
 module Main exposing (main)
 
 import Browser
-import Html exposing (Html, button, div, text, textarea)
+import Html exposing (Html, br, button, div, text, textarea)
 import Html.Attributes exposing (cols, rows, value)
-import Html.Events exposing (onClick)
+import Html.Events exposing (onClick, onInput)
+import Http
+import Json.Decode as Decode
+import Json.Encode as Encode
 
 
 main : Platform.Program () Model Msg
@@ -37,26 +40,45 @@ type alias Navigation = { previous :
 
 
 type Msg
-    = RunFormat
+    = SetInput String
+    | RunFormat
+    | ReceiveFormattedCode (Result Http.Error String)
+
+
+runFormat : Model -> Cmd Msg
+runFormat model =
+    Http.post
+        { url = "http://localhost:3000"
+        , body = Http.jsonBody <| Encode.object [ ( "code", Encode.string model ) ]
+        , expect =
+            Http.expectJson
+                ReceiveFormattedCode
+                (Decode.field "code" Decode.string)
+        }
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        SetInput str ->
+            ( str, Cmd.none )
+
         RunFormat ->
-            ( model, Cmd.none )
+            ( model, runFormat model )
 
+        ReceiveFormattedCode result ->
+            case result of
+                Ok str ->
+                    ( str, Cmd.none )
 
-
--- VIEW
--- <button id="format-button" type="button"> Format </button>
--- <br/>
--- <textarea id="content" name="content" rows="80" cols="80"></textarea>
+                Err _ ->
+                    ( model, Cmd.none )
 
 
 view : Model -> Html Msg
 view model =
     div []
         [ button [ onClick RunFormat ] [ text "Format" ]
-        , textarea [ value model, rows 80, cols 80 ] []
+        , br [] []
+        , textarea [ onInput SetInput, value model, rows 80, cols 80 ] []
         ]
