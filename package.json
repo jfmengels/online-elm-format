@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "npm run build": "elm make src/Main.elm",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:dev": "elm make src/Main.elm output=dist/index.html",
+    "build": "npm run build:dev -- --optimize",
+    "test": "elm-format src/ --validate"
   },
   "repository": {
     "type": "git",
